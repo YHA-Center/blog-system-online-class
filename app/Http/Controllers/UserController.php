@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -24,8 +26,9 @@ class UserController extends Controller
     public function get($id)
     {
         $post = Post::find($id);
+        $comments = Comment::paginate(10); // get comment
         $latest_post = Post::latest('created_at')->take(5)->get();
-        return view('frontend.detail', compact('post', 'latest_post'));
+        return view('frontend.detail', compact('post', 'latest_post', 'comments'));
     }
 
     // get by category

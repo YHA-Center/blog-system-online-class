@@ -3,6 +3,7 @@
 @section('content')
 
 {{-- Page Content  --}}
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-8">
@@ -37,58 +38,40 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         {{-- Comment Form  --}}
-                        <form action="" class="mb-4">
-                            <textarea name="" class="form-control"
-                            id="" rows="3" style="resize: none"></textarea>
+                        <form action="{{ route('comment.store', $post->id) }}" class="mb-4" method="POST">
+                            @csrf
+                            <textarea name="content" class="form-control"
+                            id="" rows="3" style="resize: none" placeholder="type something..."></textarea>
+                            @error ('content')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                            <button type="submit" class="btn btn-sm btn-primary mt-2 ">Post</button>
                         </form>
-                        {{-- Comment with nested comment  --}}
-                        <div class="d-flex mb-4">
-                            {{-- Parent Comment  --}}
-                            <div class="flex-shrink-0">
-                                <img src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                alt="" class="rounded-circle">
-                            </div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commter Name</div>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, neque!
 
-                                {{-- Child Comment 1 --}}
-                                <div class="d-flex mt-4">
-                                    <div class="flex-shrink-0">
-                                        <img src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                    alt="" class="rounded-circle">
-                                    </div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commter Name</div>
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, neque!
-
-                                        {{--nested Child Comment 1 --}}
-                                        <div class="d-flex mt-4">
-                                            <div class="flex-shrink-0">
-                                                <img src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                                            alt="" class="rounded-circle">
-                                            </div>
-                                            <div class="ms-3">
-                                                <div class="fw-bold">Commter Name</div>
-                                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, neque!
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         {{-- Single Comment  --}}
-                        <div class="d-flex">
+                        @foreach ($comments as $c)
+                        <div class="d-flex mt-3">
                             <div class="flex-shrink-0">
                                 <img src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
                             alt="" class="rounded-circle">
                             </div>
                             <div class="ms-3">
-                                <div class="fw-bold">Commter Name</div>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam, neque!
+                                <div class="fw-bold">
+                                    {{ $c->User->name }}
+                                    {{-- delete button  --}}
+                                    @auth
+                                        @if (Auth::user()->id == $c->user_id)
+                                            <a href="" class="text-sm ">
+                                                Delete
+                                            </a>
+                                        @endif
+                                    @endauth
+                                </div>
+
+                                {{ $c->content }}
                             </div>
                         </div>
+                        @endforeach
                     </div>
 
                 </div>

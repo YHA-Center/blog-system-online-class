@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\LoginController;
 
@@ -40,6 +41,10 @@ Route::get('/blog/home', [UserController::class, 'index'])->name('user.home');
 Route::get('/blog/get/{id}', [UserController::class, 'get'])->name("blog.get");
 Route::get('/blog/category/{id}', [UserController::class, 'getByCategory'])->name('blog.category');
 Route::post('/blog/search/', [UserController::class, 'search'])->name('blog.search');
+
+// comment section
+Route::post('/comment/store/{id}', [CommentController::class, 'store'])->name('comment.store')->middleware(['isLogin']); // post comment
+// Route::get('')
 
 // name('category.home') > {{ route('category.home') }}
 // Route::get('category', ....) > {{ url('category') }}

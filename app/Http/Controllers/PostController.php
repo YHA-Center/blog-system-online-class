@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,10 +64,10 @@ class PostController extends Controller
         Validator::make($request->all(), $rule)->validate(); // rule -> array formate
     }
 
-    // get
+    // get the post detail
     public function get($id){
         // get row from database
-        $post = Post::find($id);
+        $post = Post::find($id); // get post
         if($post){
             return view('backend.posts.detail', compact('post'));
         }else{
