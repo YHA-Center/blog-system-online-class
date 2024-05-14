@@ -28,4 +28,15 @@ class CommentController extends Controller
         // if failed,
         return back()->with(['error' => 'Something went wrong']);
     }
+
+
+    // destroy comment
+    public function destroy($id)
+    {
+        if(Comment::where('id', $id)->delete()){
+            return back()->with(['success' => 'Comment deleted successfully.']);
+        }else{
+            return view('errors.500Page');
+        }
+    }
 }

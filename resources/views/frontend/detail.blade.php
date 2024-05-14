@@ -56,22 +56,25 @@
                             alt="" class="rounded-circle">
                             </div>
                             <div class="ms-3">
-                                <div class="fw-bold">
+                                <div class="fw-bold d-block d-flex align-items-center justify-content-between">
                                     {{ $c->User->name }}
-                                    {{-- delete button  --}}
-                                    @auth
-                                        @if (Auth::user()->id == $c->user_id)
-                                            <a href="" class="text-sm ">
-                                                Delete
-                                            </a>
-                                        @endif
-                                    @endauth
                                 </div>
+                                <small class=""> {{ $c->created_at->diffForHumans() }} </small> <br>
 
-                                {{ $c->content }}
+                                {{ $c->content }} <br>
+                                {{-- delete button  --}}
+                                @auth
+                                @if (Auth::user()->id == $c->user_id)
+                                    <a href="{{ route('comment.destroy', $c->id) }}" class="text-sm ">
+                                        Delete
+                                    </a>
+                                @endif
+                            @endauth
                             </div>
                         </div>
                         @endforeach
+
+                        {{ $comments->links() }}
                     </div>
 
                 </div>

@@ -44,7 +44,7 @@ Route::post('/blog/search/', [UserController::class, 'search'])->name('blog.sear
 
 // comment section
 Route::post('/comment/store/{id}', [CommentController::class, 'store'])->name('comment.store')->middleware(['isLogin']); // post comment
-// Route::get('')
+Route::get('/comment/destroy/{id}', [CommentController::class, 'destroy'])->name('comment.destroy')->middleware(['isLogin']); // comment delete
 
 // name('category.home') > {{ route('category.home') }}
 // Route::get('category', ....) > {{ url('category') }}
